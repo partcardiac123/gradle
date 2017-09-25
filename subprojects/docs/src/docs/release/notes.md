@@ -57,6 +57,10 @@ A problem was found with the configuration of task ':test'. Registering invalid 
 
 You may now force Gradle to use rich or plain [build output](userguide/console.html#sec:console_build_output) by setting [`org.gradle.console`](userguide/build_environment.html#sec:gradle_configuration_properties) in your `gradle.properties`.
 
+### Adjustments in the `eclipse` plugin
+
+The `eclipse` plugin now defines separate output directories for each source folders. Also, each source folders and dependencies define an additional `gradle_source_sets` classpath attribute. The attribute contains a comma-separated list of source sets which contains the element. Future [Buildship](http://eclipse.org/buildship) versions will use this information to separate source sets when launching Java applications within Eclipse.
+
 <!--
 ### Example new and noteworthy
 -->
