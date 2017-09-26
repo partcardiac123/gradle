@@ -57,6 +57,20 @@ A problem was found with the configuration of task ':test'. Registering invalid 
 
 You may now force Gradle to use rich or plain [build output](userguide/console.html#sec:console_build_output) by setting [`org.gradle.console`](userguide/build_environment.html#sec:gradle_configuration_properties) in your `gradle.properties`.
 
+### Script plugins can be applied using the `plugins` block
+
+You can now configure the project using an external build script by applying it using the `plugins` block:
+
+```groovy
+plugins {
+    script("path/to/other.gradle")
+    script("http://example.com/url/of/other.gradle")
+}
+```
+
+See the [Organizing build logic](userguide/organizing_build_logic.html#sec:configuring_using_external_script) section of the user guide for more details.
+
+
 <!--
 ### Example new and noteworthy
 -->
@@ -78,6 +92,9 @@ All Command line options that allow to enable a feature now also have an equival
 
 ## Fixed issues
 
+### Version ranges are now handled properly
+
+Gradle will now honor version ranges correctly when multiple ranges are intersecting. For example, if a dependency on `some-module` is found with a range of versions `[3,6]` and that the same dependency is found transitively with a range of `[4,8]`, Gradle now selects version `6`, which is the highest version within both ranges. Previous releases of Gradle used to select version `8`.
 
 ## Deprecations
 
@@ -133,6 +150,11 @@ There are better ways for re-using task logic, for example by using [task depend
 - `AbstractNativeCompileTask.compilerArgs` changed type to `ListProperty<String>` from `List<String>`.
 - `AbstractNativeCompileTask.objectFileDir` changed type to `DirectoryVar` from `File`.
 - `AbstractLinkTask.linkerArgs` changed type to `ListProperty<String>` from `List<String>`.
+
+### Changes to `PluginRequest`
+
+The `id` property of `PluginRequest` is now nullable, e.g. in case of a [script plugin request](userguide/organizing_build_logic.html#sec:configuring_using_external_script).
+`PluginRequest` instances are exposed to user code in custom [plugin resolution rules](userguide/plugins.html#sec:plugin_management). 
 
 ## External contributions
 
